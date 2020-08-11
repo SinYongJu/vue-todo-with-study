@@ -2,9 +2,7 @@
   <div id="app">
     <h1>TODO</h1>
     <div>
-      <TextFiled />
-      <input type="text" />
-      <button type="button">CREATE</button>
+      <TextFiled @create="create" />
     </div>
     <div>
       <strong>Todo List</strong>
@@ -25,6 +23,12 @@ import TextFiled from "./TextFiled.vue";
 
 export default {
   name: "App",
+
+  methods: {
+    create() {
+      console.log("create");
+    }
+  },
   components: {
     TextFiled
   }
