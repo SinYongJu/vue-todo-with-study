@@ -25,42 +25,42 @@ export default {
   data() {
     return {
       todoList: [
-        {
-          id: 0,
-          desc: "Todo todo todo ...",
-          isModify: false
-        },
-        {
-          id: 1,
-          desc: "2 Todo todo todo ...",
-          isModify: false
-        },
-        {
-          id: 2,
-          desc: "3 Todo todo todo ...",
-          isModify: false
-        },
-        {
-          id: 3,
-          desc: "4 Todo todo todo ...",
-          isModify: false
-        },
-        {
-          id: 4,
-          desc: "5 Todo todo todo ...",
-          isModify: false
-        }
+        // {
+        //   id: 0,
+        //   desc: "Todo todo todo ...",
+        //   isModify: false
+        // },
       ]
     };
   },
   methods: {
-    create() {
-      console.log("create");
+    /**
+     * create Todo
+     * @param {String} desc
+     */
+    create(desc) {
+      const { todoList } = this;
+      const todo = {};
+      const prev = todoList[todoList.length - 1];
+      const prevId = prev ? prev.id : 0;
+      const id = prevId + 1;
+      todo.id = id;
+      todo.desc = desc;
+      todo.isModify = false;
+      this.todoList = todoList.concat(todo);
     },
+    /**
+     * update Todo
+     * @param { Number } id
+     */
     update(id) {
       let target = this.todoList.findIndex(todo => todo.id === id);
       this.todoList[target].isModify = true;
     },
+    /**
+     * delete Todo
+     * @param { Number } id
+     */
     deleteTodo(id) {
       const { todoList } = this;
       let target = todoList.findIndex(todo => todo.id === id);
@@ -68,10 +68,22 @@ export default {
       let next = todoList.slice(target + 1, todoList.length);
       this.todoList = [...prev, ...next];
     },
+    /**
+     * clear Todo List
+     *
+     */
     clearTodo() {
       this.todoList = [];
     },
-    modify(id, { desc }) {
+    /**
+     * Modify Todo List
+     *
+     * id : todo id
+     * desc : todo desc
+     *  @param {Object} todoItem
+     *
+     */
+    modify({ id, desc }) {
       let target = this.todoList.findIndex(todo => todo.id === id);
       this.todoList[target].desc = desc;
       this.todoList[target].isModify = false;

@@ -42,7 +42,8 @@ export default {
       this.$emit("delete", id);
     },
     modifyTodo(id) {
-      this.$emit("modify", id, {
+      this.$emit("modify", {
+        id,
         desc: this.desc
       });
     }
