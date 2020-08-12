@@ -7,6 +7,11 @@
 <script>
 export default {};
 </script>
-
-<style>
+<style scoped>
+button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+}
 </style>
