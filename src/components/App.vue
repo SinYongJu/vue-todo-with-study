@@ -1,36 +1,86 @@
 <template>
   <div id="app">
     <h1>TODO</h1>
-    <div>
-      <TextFiled @create="create" />
-    </div>
-    <div>
-      <strong>Todo List</strong>
-      <ul>
-        <li>
-          <p>TODO TODO</p>
-          <button type="button">update</button>
-          <button type="button">delete</button>
-        </li>
-      </ul>
-    </div>
-    <button type="button">All clear</button>
+    <TextFiled @create="create" />
+    <TodoList :isClear="!(todoList.length > 0)" @clear="clearTodo">
+      <TodoItem
+        v-for="(todo, index) of todoList"
+        :key="todo.id"
+        :todo="todo"
+        :index="index"
+        @update="update"
+        @delete="deleteTodo"
+        @modify="modify"
+      />
+    </TodoList>
   </div>
 </template>
 
 <script>
 import TextFiled from "./TextFiled.vue";
-
+import TodoList from "./TodoList.vue";
+import TodoItem from "./TodoItem.vue";
 export default {
   name: "App",
-
+  data() {
+    return {
+      todoList: [
+        {
+          id: 0,
+          desc: "Todo todo todo ...",
+          isModify: false
+        },
+        {
+          id: 1,
+          desc: "2 Todo todo todo ...",
+          isModify: false
+        },
+        {
+          id: 2,
+          desc: "3 Todo todo todo ...",
+          isModify: false
+        },
+        {
+          id: 3,
+          desc: "4 Todo todo todo ...",
+          isModify: false
+        },
+        {
+          id: 4,
+          desc: "5 Todo todo todo ...",
+          isModify: false
+        }
+      ]
+    };
+  },
   methods: {
     create() {
       console.log("create");
+    },
+    update(id) {
+      let target = this.todoList.findIndex(todo => todo.id === id);
+      this.todoList[target].isModify = true;
+    },
+    deleteTodo(id) {
+      const { todoList } = this;
+      let target = todoList.findIndex(todo => todo.id === id);
+      let prev = todoList.slice(0, target);
+      let next = todoList.slice(target + 1, todoList.length);
+      this.todoList = [...prev, ...next];
+    },
+    clearTodo() {
+      this.todoList = [];
+    },
+    modify(id, { desc }) {
+      let target = this.todoList.findIndex(todo => todo.id === id);
+      this.todoList[target].desc = desc;
+      this.todoList[target].isModify = false;
     }
   },
   components: {
-    TextFiled
+    TextFiled,
+    TodoList,
+    TodoItem
   }
 };
 </script>
